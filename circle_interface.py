@@ -77,6 +77,18 @@ interface_tuple_list.append((x_t2,y_t2))
 interface_tuple_list.append((x_t3,y_t3))
 
 
+def generate_paramterization(x_func,y_func,t_list):
+	x_list=[]
+	y_list=[]
+
+	for i in t_list:
+		x_list.append(x_func(i))
+		y_list.append(y_func(i))
+
+	return (x_list,y_list)
+
+
+
 def interface_plot(x_list,y_list,interface_tuple_list):
 	x_params=[]
 	y_params=[]
