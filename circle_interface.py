@@ -71,46 +71,59 @@ y_params.append(y_t1)
 y_params.append(y_t2)
 y_params.append(y_t3)
 
+interface_tuple_list=[]
+interface_tuple_list.append((x_t1,y_t1))
+interface_tuple_list.append((x_t2,y_t2))
+interface_tuple_list.append((x_t3,y_t3))
 
 
-lower_x=[]
-lower_y=[]
-upper_x=[]
-upper_y=[]
+def interface_plot(x_list,y_list,interface_tuple_list):
+	x_params=[]
+	y_params=[]
+	for tuplist in interface_tuple_list:
+		x_params.append(tuplist[0])
+		y_params.append(tuplist[1])
 
 
 
-	
-for i in range(0,len(y_list)-1):
-	for j in range(0,len(x_list)-1):
+	lower_x=[]
+	lower_y=[]
+	upper_x=[]
+	upper_y=[]
+
+
+
 		
-		for z in range(0,len(x_params)):
+	for i in range(0,len(y_list)-1):
+		for j in range(0,len(x_list)-1):
+			
+			for z in range(0,len(x_params)):
 
-			for k in range(0,len(x_t1)):	
-				if x_list[j] < x_params[z][k] < x_list[j+1] and y_list[i] < y_params[z][k] < y_list[i+1] :
-				
+				for k in range(0,len(x_t1)):	
+					if x_list[j] < x_params[z][k] < x_list[j+1] and y_list[i] < y_params[z][k] < y_list[i+1] :
+					
 
-					lower_x.append(x_list[j])
-					lower_y.append(y_list[i])
-				
-					upper_x.append(x_list[j+1])
-					upper_y.append(y_list[i+1])
-
-
-plt.plot(x_t1,y_t1)
-plt.plot(x_t2,y_t2)
-plt.plot(x_t3,y_t3)
-plt.plot(lower_x,lower_y, 'o')
-plt.plot(upper_x,upper_y , 'o')
-plt.xlim([0,1])
-plt.ylim([0,1])
-plt.show()
+						lower_x.append(x_list[j])
+						lower_y.append(y_list[i])
+					
+						upper_x.append(x_list[j+1])
+						upper_y.append(y_list[i+1])
 
 
+	plt.plot(x_t1,y_t1)
+	plt.plot(x_t2,y_t2)
+	plt.plot(x_t3,y_t3)
+	plt.plot(lower_x,lower_y, 'o')
+	plt.plot(upper_x,upper_y , 'o')
+	plt.xlim([0,1])
+	plt.ylim([0,1])
+	plt.show()
 
 
 
 
+
+interface_plot(x_list,y_list,interface_tuple_list)
 
 
 
