@@ -2,6 +2,8 @@ from pde import *
 import math
 import numpy as np
 import pylab as plt
+import scipy.interpolate as inter
+import time
 a=0
 b=1
 c=0
@@ -151,11 +153,44 @@ plt.show()
 	plt.ylim([0,1])
 	plt.show()
 
+def generate_spline_2d(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	out = inter.splev(u, tck)
+	return (out[0],out[1])
+
+t = np.arange(0, 1, .001)
+x = np.cos(2*np.pi*t)
+y = np.sin(2*np.pi*t)
+v= generate_spline_2d(x,y)
+plt.plot(v[0],v[1])
+plt.show()
+
+def generate_spline_2d_tangent(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	derv = inter.splev(u, tck,der=1)
+	return (derv[0],derv[1])
+
+def generate_spline_2d_normal(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	derv = inter.splev(u, tck,der=1)
+	return (-derv[1],derv[0])
 
 
 
+a=generate_spline_2d_tangent(x,y)
+b=generate_spline_2d_normal(x,y)
 
-interface_plot(x_list,y_list,interface_tuple_list)
+plt.plot(a[0],a[1])
+plt.show()
+plt.plot(b[0],b[1])
+plt.show()
+
+
+for i in range(0,len(a[0])):
+	print a[0][i]*b[0][i] + a[1][i]*b[1][i]
+
+
+#interface_plot(x_list,y_list,interface_tuple_list)
 
 
 
