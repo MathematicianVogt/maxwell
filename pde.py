@@ -11,8 +11,9 @@ import math
 '''
 
 
-def onedinterval(a,b,h,n):
+def onedinterval(a,b,n):
 	interval = []
+	h=(b-a)/float(n)
 	for i in range(0,n+1):
 		interval.append(a+i*h)
 	return interval

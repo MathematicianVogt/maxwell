@@ -121,6 +121,26 @@ def interface_plot(x_list,y_list,interface_tuple_list):
 						upper_x.append(x_list[j+1])
 						upper_y.append(y_list[i+1])
 
+<<<<<<< Updated upstream
+=======
+xGridList=[]
+yGridList=[]
+
+for i in x_list:
+	for j in y_list:
+		xGridList.append(i)
+		yGridList.append(j)
+
+
+
+plt.plot(xGridList,yGridList, '-')
+plt.plot(x_t,y_t)
+plt.plot(lower_x,lower_y)
+plt.plot(upper_x,upper_y)
+plt.xlim([0,1])
+plt.ylim([0,1])
+plt.show()
+>>>>>>> Stashed changes
 
 	plt.plot(x_t1,y_t1)
 	plt.plot(x_t2,y_t2)
