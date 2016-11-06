@@ -6,15 +6,22 @@ import matplotlib.pyplot as plt
 largestN=62
 def secant(func,x0,esp,title):
 	xm1=.99*x0
-	x0=x0
 	temp = x0
 
 	it_num=[0]
 	val_num=[x0]
 	counter=1
+
+	temp = x0
+	x0 = x0 - func(x0)*((x0-xm1)/(func(x0)-func(xm1)))
+	it_num.append(counter)
+	val_num.append(x0)
+	counter+=1
+	xm1 = temp
+
 	while(math.fabs(xm1-x0)>esp and counter<largestN):
 		temp = x0
-		x0 = x0 - func(x0)*(x0-xm1)/(func(x0)-func(xm1))
+		x0 = x0 - func(x0)*((x0-xm1)/(func(x0)-func(xm1)))
 		it_num.append(counter)
 		val_num.append(x0)
 		counter+=1
@@ -65,9 +72,15 @@ def mainFunc(f,x0,esp,title):
 	
 
 
-	plt.plot(a1,a2,label="Secant Method")
-	plt.plot(b1,b2,label="Newton Method")
+	plt.plot(a1,a2,"--",label="Secant Method")
+	plt.plot(b1,b2,"*",label="Newton Method")
 	plt.plot(c1,c2,label="Chord Method")
+	print "----"
+	print a2[-1]
+	print b2[-1]
+	print c2[-1]
+	print "----"
+	print a2
 	#plt.title(r'%s' %(title))
 	plt.legend()
 	plt.show()
@@ -81,10 +94,10 @@ f5=lambda x: x**2 +1
 
 
 
-#mainFunc(f1,.5,.01,"$cos(x) -x$")
-#mainFunc(f2,1.0,.01,"$arctan(x)$")
-#mainFunc(f3,3.0,.01,"$sin(x) $")
-#mainFunc(f4,.5,.01,"$x^2$")
+mainFunc(f1,.5,.01,"$cos(x) -x$")
+mainFunc(f2,1.0,.01,"$arctan(x)$")
+mainFunc(f3,3.0,.01,"$sin(x) $")
+mainFunc(f4,.5,.01,"$x^2$")
 mainFunc(f5,10.0,.01,"$x^2+1$")
 
 
