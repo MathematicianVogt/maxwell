@@ -114,6 +114,8 @@ number_of_basis_functions=10
 
 
 starting=np.ones(((n+1)*number_of_basis_functions,1))
+for i in range(0,n+1):
+	starting[i,0] = math.cos(i) + math.sin(i)
 
 
 
@@ -133,7 +135,7 @@ for i in range(0,number_of_basis_functions):
 constraint_list=tuple(constraint_list)
 print "done"
 res = op.minimize(obj_func, xo, method='CG',tol=.001,options={"maxiter":10000,"disp": True},jac=False)
-
+print "finished"
 sol =  res.x
 parts_of_sol=even_divide(sol,number_of_basis_functions)
 
@@ -143,6 +145,7 @@ for i in parts_of_sol:
 	plt.plot(t,i)
 	plt.show()
 '''
+temp=onedfunc(lambda x: 0.0,t)
 firstArray=onedfunc(lambda x: 0.0,t)
 
 for i in range(0,len(parts_of_sol)):
@@ -150,7 +153,12 @@ for i in range(0,len(parts_of_sol)):
 	second=[x * res for x in parts_of_sol[i]]
 	firstArray = [x + y for x, y in zip(firstArray,second )]
 
-plt.plot(t,firstArray,label="Optimization approach")
+for i in range(0,len(parts_of_sol)):
+	for j in range(0,len(parts_of_sol)):
+		print (i,j)
+		print innerproduct_end(parts_of_sol[i],parts_of_sol[j])
+
+plt.plot(t,firstArray,label="Idiots Approach")
 
 
 
