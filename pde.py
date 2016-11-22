@@ -44,8 +44,8 @@ def makeMovie(xList, solList,tList,title,xlab,ylab):
 				x0 = xList
 				y0 =solList[i]
 
-				plt.xlim([-15,15])
-				plt.ylim([-2,2])
+				#plt.xlim([-15,15])
+				#plt.ylim([-2,2])
 				plt.plot(x0,y0)
 				plt.title(title + " Time = " + str(tList[i]))
 				plt.xlabel(xlab)
@@ -74,3 +74,18 @@ def makeMovieMax(xList,yList,tList, solList,title,xlab,ylab):
 				plt.ylabel(ylab)
 				writer.grab_frame()
 				plt.clf()
+
+def generate_spline_2d(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	out = inter.splev(u, tck)
+	return (out[0],out[1])
+
+def generate_spline_2d_tangent(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	derv = inter.splev(u, tck,der=1)
+	return (derv[0],derv[1])
+
+def generate_spline_2d_normal(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	derv = inter.splev(u, tck,der=1)
+	return (-derv[1],derv[0])

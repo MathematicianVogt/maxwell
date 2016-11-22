@@ -75,6 +75,9 @@ def mainFunc(f,x0,esp,title):
 	plt.plot(a1,a2,"--",label="Secant Method")
 	plt.plot(b1,b2,"*",label="Newton Method")
 	plt.plot(c1,c2,label="Chord Method")
+	plt.title(title)
+	plt.xlabel("Itteration Number")
+	plt.ylabel("Value Of Root")
 	print "----"
 	print a2[-1]
 	print b2[-1]

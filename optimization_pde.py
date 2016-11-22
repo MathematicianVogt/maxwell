@@ -48,6 +48,7 @@ def innerproduct_end(u,u_j):
 	
 	#print "--"
 	res=sp.simps(product,t)
+	#print t
 	#print res
 	return res
 
@@ -75,11 +76,9 @@ def objectiveFuncEval(u,uList,numberofBasis):
 	return res
 
 
-def buildConstrains(uList,i,j):
+def buildConstrains(uList,i,j,numberofBasis):
 	parsedList= even_divide(uList,numberofBasis)
-	u_i=parsedList[i]
-	u_j=parsedList[j]
-	return innerproduct(uList[i],uList[j])
+	return innerproduct_end(parsedList[i],parsedList[j])
 
 
 
@@ -114,8 +113,10 @@ number_of_basis_functions=10
 
 
 starting=np.ones(((n+1)*number_of_basis_functions,1))
-for i in range(0,n+1):
+for i in range(0,(n+1)*number_of_basis_functions):
+	#starting[i,0] = 0.0
 	starting[i,0] = math.cos(i) + math.sin(i)
+	#starting[i,0] = i
 
 
 
@@ -128,13 +129,13 @@ constraint_list=[]
 for i in range(0,number_of_basis_functions):
 	for j in range(0,number_of_basis_functions):
 		if (i!=j):
-			constraint_list.append({'type': 'eq', 'fun': lambda x: buildConstrains(x,i,j)})
+			constraint_list.append({'type': 'eq', 'fun': lambda x: buildConstrains(x,i,j,number_of_basis_functions)})
 		else:
-			constraint_list.append({'type': 'eq', 'fun': lambda x: buildConstrains(x,i,j) -1.0 })
+			constraint_list.append({'type': 'eq', 'fun': lambda x: buildConstrains(x,i,j,number_of_basis_functions) -1.0 })
 
 constraint_list=tuple(constraint_list)
 print "done"
-res = op.minimize(obj_func, xo, method='CG',tol=.001,options={"maxiter":10000,"disp": True},jac=False)
+res = op.minimize(obj_func, xo,constraints=constraint_list, method='SLSQP',tol=.001,options={"maxiter":10000,"disp": True})
 print "finished"
 sol =  res.x
 parts_of_sol=even_divide(sol,number_of_basis_functions)
@@ -155,7 +156,7 @@ for i in range(0,len(parts_of_sol)):
 
 for i in range(0,len(parts_of_sol)):
 	for j in range(0,len(parts_of_sol)):
-		print (i,j)
+		#print (i,j)
 		print innerproduct_end(parts_of_sol[i],parts_of_sol[j])
 
 plt.plot(t,firstArray,label="Idiots Approach")

@@ -25,6 +25,11 @@ def f(x,t,c,N):
 N=100
 tList = onedinterval(0.0,1.0,N)
 tList=tList[1:]
+
+tprime=[]
+
+
+
 first=1.0
 h_int = onedfunc(lambda x : math.cos(x),tList)
 c=.9
