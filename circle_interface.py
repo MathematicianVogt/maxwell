@@ -4,6 +4,7 @@ import numpy as np
 import pylab as plt
 import scipy.interpolate as inter
 import time
+
 a=0
 b=1
 c=0
@@ -33,10 +34,14 @@ while(stab<=1):
 
 spatial_step_t=dummy_dt
 print spatial_step_t
+'''
 x_list=onedinterval(a,b,spatial_step_x,n)
 y_list=onedinterval(c,d,spatial_step_y,n)
 t_list=onedinterval(t0,t1,spatial_step_t,n_time)
+'''
 
+x_list=onedinterval(a,b,n)
+y_list=onedinterval(c,d,n)
 
 curve_time0=0
 curve_timef=2*math.pi
@@ -123,35 +128,34 @@ def interface_plot(x_list,y_list,interface_tuple_list):
 						upper_x.append(x_list[j+1])
 						upper_y.append(y_list[i+1])
 
-<<<<<<< Updated upstream
-=======
-xGridList=[]
-yGridList=[]
+	xGridList=[]
+	yGridList=[]
 
-for i in x_list:
-	for j in y_list:
-		xGridList.append(i)
-		yGridList.append(j)
+	for i in x_list:
+		for j in y_list:
+			xGridList.append(i)
+			yGridList.append(j)
 
 
 
-plt.plot(xGridList,yGridList, '-')
-plt.plot(x_t,y_t)
-plt.plot(lower_x,lower_y)
-plt.plot(upper_x,upper_y)
-plt.xlim([0,1])
-plt.ylim([0,1])
-plt.show()
->>>>>>> Stashed changes
-
-	plt.plot(x_t1,y_t1)
-	plt.plot(x_t2,y_t2)
-	plt.plot(x_t3,y_t3)
-	plt.plot(lower_x,lower_y, 'o')
-	plt.plot(upper_x,upper_y , 'o')
+	#plt.plot(xGridList,yGridList, '-')
+	#plt.plot(x_t,y_t)
+	plt.plot(lower_x,lower_y , '*')
+	plt.plot(upper_x,upper_y, '*')
 	plt.xlim([0,1])
 	plt.ylim([0,1])
 	plt.show()
+
+'''
+plt.plot(x_t1,y_t1)
+plt.plot(x_t2,y_t2)
+plt.plot(x_t3,y_t3)
+plt.plot(lower_x,lower_y, 'o')
+plt.plot(upper_x,upper_y , 'o')
+plt.xlim([0,1])
+plt.ylim([0,1])
+plt.show()
+'''
 
 def generate_spline_2d(xval,yval):
 	tck, u = inter.splprep([xval, yval], s=0)
@@ -162,7 +166,9 @@ t = np.arange(0, 1, .001)
 x = np.cos(2*np.pi*t)
 y = np.sin(2*np.pi*t)
 v= generate_spline_2d(x,y)
+interface_plot(x_list,y_list,interface_tuple_list)
 plt.plot(v[0],v[1])
+plt.title("interface plot")
 plt.show()
 
 def generate_spline_2d_tangent(xval,yval):
@@ -181,8 +187,10 @@ a=generate_spline_2d_tangent(x,y)
 b=generate_spline_2d_normal(x,y)
 
 plt.plot(a[0],a[1])
+plt.title("tangent of interface plot")
 plt.show()
 plt.plot(b[0],b[1])
+plt.title("normal of interface plot")
 plt.show()
 
 
