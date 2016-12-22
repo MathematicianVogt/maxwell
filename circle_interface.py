@@ -166,11 +166,12 @@ t = np.arange(0, 1, .001)
 x = np.cos(2*np.pi*t)
 y = np.sin(2*np.pi*t)
 v= generate_spline_2d(x,y)
-interface_plot(x_list,y_list,interface_tuple_list)
+#interface_plot(x_list,y_list,interface_tuple_list)
+'''
 plt.plot(v[0],v[1])
 plt.title("interface plot")
 plt.show()
-
+'''
 def generate_spline_2d_tangent(xval,yval):
 	tck, u = inter.splprep([xval, yval], s=0)
 	derv = inter.splev(u, tck,der=1)
@@ -181,19 +182,33 @@ def generate_spline_2d_normal(xval,yval):
 	derv = inter.splev(u, tck,der=1)
 	return (-derv[1],derv[0])
 
+def generate_curveature(xval,yval):
+	tck, u = inter.splprep([xval, yval], s=0)
+	derv = inter.splev(u, tck,der=1)
+	derv2 = inter.splev(u, tck,der=2)
+	curv=[]
+	for i in range(0,len(xval)):
+		curv.append(math.fabs( (derv2[1][i]*derv[0][i] - derv2[0][i]*derv[1][i] ))/math.pow(derv[0][i]**2  +derv[1][i]**2,1.5) )
+	return curv
 
 
 a=generate_spline_2d_tangent(x,y)
 b=generate_spline_2d_normal(x,y)
+c=generate_curveature(x,y)
+plt.plot(t,c)
+plt.show()
+print len(t)
+print len(c)
 
+'''
 plt.plot(a[0],a[1])
 plt.title("tangent of interface plot")
 plt.show()
 plt.plot(b[0],b[1])
 plt.title("normal of interface plot")
 plt.show()
-
-
+'''
+'''
 for i in range(0,len(a[0])):
 	print a[0][i]*b[0][i] + a[1][i]*b[1][i]
 
@@ -201,7 +216,7 @@ for i in range(0,len(a[0])):
 #interface_plot(x_list,y_list,interface_tuple_list)
 
 
-
+'''
 
 
 
